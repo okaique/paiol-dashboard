@@ -1,16 +1,3 @@
-
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,14 +9,24 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Edit, Trash2, Plus, Check, X, Truck } from 'lucide-react';
-import { useRetiradas } from '@/hooks/useRetiradas';
-import { useDeleteRetirada, useUpdateRetirada } from '@/hooks/useRetiradaMutations';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { useListFilters } from '@/hooks/useListFilters';
-import { ListFilters } from './ListFilters';
+import { useDeleteRetirada, useUpdateRetirada } from '@/hooks/useRetiradaMutations';
+import { useRetiradas } from '@/hooks/useRetiradas';
 import type { Retirada } from '@/types/database';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { formatarDataHoraBrasilia } from '@/utils/dateUtils';
+import { Check, Edit, Plus, Trash2, Truck, X } from 'lucide-react';
+import { ListFilters } from './ListFilters';
 
 interface RetiradasListProps {
   paiolId: string;
@@ -169,9 +166,7 @@ export const RetiradasList = ({ paiolId, onEdit, onNew, statusPaiol }: Retiradas
               {retiradas.map((retirada: any) => (
                 <TableRow key={retirada.id}>
                   <TableCell>
-                    {format(new Date(retirada.data_retirada), 'dd/MM/yyyy HH:mm', {
-                      locale: ptBR,
-                    })}
+                    {formatarDataHoraBrasilia(retirada.data_retirada)}
                   </TableCell>
                   <TableCell>{retirada.clientes?.nome || 'N/A'}</TableCell>
                   <TableCell>{retirada.volume_retirado} m³</TableCell>
@@ -221,9 +216,7 @@ export const RetiradasList = ({ paiolId, onEdit, onNew, statusPaiol }: Retiradas
                   </TableCell>
                   <TableCell>
                     {retirada.data_pagamento 
-                      ? format(new Date(retirada.data_pagamento), 'dd/MM/yyyy HH:mm', {
-                          locale: ptBR,
-                        })
+                      ? formatarDataHoraBrasilia(retirada.data_pagamento)
                       : '-'
                     }
                   </TableCell>

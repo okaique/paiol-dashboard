@@ -1,8 +1,7 @@
-
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Calendar, User, FileText, Clock } from 'lucide-react';
 import { formatarDataHoraBrasilia } from '@/utils/dateUtils';
+import { Calendar, Clock, FileText, User } from 'lucide-react';
 
 interface EventoTimeline {
   id: string;

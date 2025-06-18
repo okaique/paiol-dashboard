@@ -1,18 +1,17 @@
-
-import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { useRelatorioVolumesPorPeriodo } from '@/hooks/useRelatorios';
-import { usePaiols } from '@/hooks/usePaiols';
 import { useCiclosPaiol } from '@/hooks/useCiclosPaiol';
-import { FileBarChart, Download, Filter, X, Eye } from 'lucide-react';
+import { usePaiols } from '@/hooks/usePaiols';
+import { useRelatorioVolumesPorPeriodo } from '@/hooks/useRelatorios';
+import { formatarDataHoraBrasilia } from '@/utils/dateUtils';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Download, Eye, FileBarChart, Filter, X } from 'lucide-react';
+import { useState } from 'react';
 
 export const RelatoriosVolumesPorPeriodo = () => {
   const [dataInicio, setDataInicio] = useState<string>('');
@@ -53,7 +52,7 @@ export const RelatoriosVolumesPorPeriodo = () => {
 
   const formatarDataHora = (data: string) => {
     try {
-      return format(new Date(data), 'dd/MM/yyyy HH:mm', { locale: ptBR });
+      return formatarDataHoraBrasilia(data);
     } catch {
       return data;
     }
