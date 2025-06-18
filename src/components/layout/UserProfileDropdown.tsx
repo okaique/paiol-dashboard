@@ -19,6 +19,11 @@ export const UserProfileDropdown = ({ children }: UserProfileDropdownProps) => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
+  // Se não há usuário, não renderizar o dropdown
+  if (!user) {
+    return <>{children}</>;
+  }
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/auth');
@@ -31,7 +36,7 @@ export const UserProfileDropdown = ({ children }: UserProfileDropdownProps) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <div className="flex flex-col space-y-1 p-2">
-          <p className="text-sm font-medium leading-none">{user?.email}</p>
+          <p className="text-sm font-medium leading-none">{user.email}</p>
           <p className="text-xs leading-none text-muted-foreground">
             Usuário do sistema
           </p>

@@ -33,8 +33,39 @@ export const Header = ({ onMenuToggle, isMobileMenuOpen }: HeaderProps) => {
     return colors[Math.abs(hash) % colors.length];
   };
 
-  const userInitials = getUserInitials(user?.email || '');
-  const userColor = getUserColor(user?.email || '');
+  // Se não há usuário, não renderizar o perfil
+  if (!user) {
+    return (
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border h-16">
+        <div className="flex items-center justify-between h-full px-4 lg:px-6">
+          <div className="flex items-center">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={onMenuToggle}
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </Button>
+            <div className="hidden lg:flex items-center">
+              <h1 className="text-xl font-bold text-primary">Sistema de Paióis</h1>
+            </div>
+          </div>
+          <div className="flex-1"></div>
+          <div className="flex items-center">
+            {/* Sem usuário, sem perfil */}
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  const userInitials = getUserInitials(user.email || '');
+  const userColor = getUserColor(user.email || '');
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border h-16">

@@ -15,9 +15,18 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const location = useLocation();
 
   useEffect(() => {
-    // Se não está carregando e não há usuário, redirecionar para auth
+    console.log('ProtectedRoute - Auth state:', { user: !!user, loading, pathname: location.pathname });
+    
+    // Se não está carregando e não há usuário, redirecionar para auth apenas se não estivermos já lá
     if (!loading && !user && location.pathname !== '/auth') {
+      console.log('Redirecionando para /auth...');
       navigate('/auth', { replace: true });
+    }
+    
+    // Se há usuário e estamos na página de auth, redirecionar para home
+    if (!loading && user && location.pathname === '/auth') {
+      console.log('Usuário logado, redirecionando para home...');
+      navigate('/', { replace: true });
     }
   }, [user, loading, navigate, location.pathname]);
 
@@ -32,9 +41,11 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
 
+  // Se não há usuário, mostrar formulário de login
   if (!user) {
     return <AuthForm />;
   }
 
+  // Se há usuário, mostrar conteúdo protegido
   return <>{children}</>;
 };

@@ -47,10 +47,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
+    console.log('Inicializando AuthProvider...');
+    
     // Configurar listener de mudanças de autenticação
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state changed:', event, session);
+        console.log('Auth state changed:', { event, hasSession: !!session, hasUser: !!session?.user });
+        
         setSession(session);
         setUser(session?.user ?? null);
         
@@ -69,6 +72,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Verificar sessão existente
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Sessão existente:', { hasSession: !!session, hasUser: !!session?.user });
+      
       setSession(session);
       setUser(session?.user ?? null);
       
@@ -84,10 +89,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signIn = async (email: string, password: string) => {
     console.log('Tentando fazer login com:', email);
+    setLoading(true);
+    
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+    
+    if (error) {
+      setLoading(false);
+      console.error('Erro no login:', error);
+    }
+    // Note: não definimos loading como false aqui se sucesso, 
+    // pois o onAuthStateChange vai cuidar disso
+    
     return { error };
   };
 

@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +11,7 @@ import { useAuth } from '@/hooks/useAuth';
 
 export const AuthForm = () => {
   const { signIn } = useAuth();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,9 +29,12 @@ export const AuthForm = () => {
     
     if (error) {
       setError(error.message);
+      setLoading(false);
+    } else {
+      // Login bem-sucedido, redirecionar para home
+      console.log('Login bem-sucedido, redirecionando...');
+      navigate('/', { replace: true });
     }
-    
-    setLoading(false);
   };
 
   return (
