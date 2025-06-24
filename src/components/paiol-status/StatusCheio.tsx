@@ -37,14 +37,14 @@ export const StatusCheio = ({ paiol, dragagemMaisRecente, cubagem }: StatusCheio
           {cubagem && (
             <div className="grid grid-cols-2 gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
               <div className="text-center">
-                <p className="text-sm text-green-600 font-medium">Volume Normal</p>
+                <p className="text-sm text-green-600 font-medium">Volume Normal (Calculado)</p>
                 <p className="text-2xl font-bold text-green-700">
                   {cubagem.volume_normal.toFixed(3)}
                 </p>
                 <p className="text-xs text-green-600">m³</p>
               </div>
               <div className="text-center">
-                <p className="text-sm text-green-600 font-medium">Volume Reduzido</p>
+                <p className="text-sm text-green-600 font-medium">Volume Reduzido (Real)</p>
                 <p className="text-2xl font-bold text-green-700">
                   {cubagem.volume_reduzido.toFixed(3)}
                 </p>

@@ -11,7 +11,7 @@ interface CubagemInfoProps {
 
 export const CubagemInfo = ({ cubagem }: CubagemInfoProps) => {
   const perdaVolume = cubagem.volume_normal - cubagem.volume_reduzido;
-  const percentualPerda = (perdaVolume / cubagem.volume_normal) * 100;
+  const percentualPerda = cubagem.volume_normal > 0 ? (perdaVolume / cubagem.volume_normal) * 100 : 0;
 
   return (
     <div className="space-y-4">
@@ -33,44 +33,46 @@ export const CubagemInfo = ({ cubagem }: CubagemInfoProps) => {
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUp className="h-4 w-4 text-blue-600" />
-                <span className="text-sm font-medium text-blue-700">Volume Normal</span>
+                <span className="text-sm font-medium text-blue-700">Volume Normal (Calculado)</span>
               </div>
               <p className="text-2xl font-bold text-blue-800 mb-1">
                 {cubagem.volume_normal.toFixed(3)} m³
               </p>
-              <p className="text-xs text-blue-600">Volume bruto calculado</p>
+              <p className="text-xs text-blue-600">Volume calculado pela fórmula do cilindro</p>
             </div>
             
             <div className="bg-green-50 p-4 rounded-lg border border-green-200">
               <div className="flex items-center gap-2 mb-2">
                 <Calculator className="h-4 w-4 text-green-600" />
-                <span className="text-sm font-medium text-green-700">Volume Reduzido</span>
+                <span className="text-sm font-medium text-green-700">Volume Reduzido (Real)</span>
               </div>
               <p className="text-2xl font-bold text-green-800 mb-1">
                 {cubagem.volume_reduzido.toFixed(3)} m³
               </p>
-              <p className="text-xs text-green-600">Volume líquido (85%)</p>
+              <p className="text-xs text-green-600">Volume real informado manualmente</p>
             </div>
           </div>
 
-          {/* Informações de Perda */}
+          {/* Informações de Perda/Diferença */}
           <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
             <div className="flex items-center gap-2 mb-2">
               <AlertTriangle className="h-4 w-4 text-orange-600" />
-              <span className="text-sm font-medium text-orange-700">Análise de Perda</span>
+              <span className="text-sm font-medium text-orange-700">Análise de Diferença</span>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <p className="text-lg font-semibold text-orange-800">
                   {perdaVolume.toFixed(3)} m³
                 </p>
-                <p className="text-xs text-orange-600">Volume perdido</p>
+                <p className="text-xs text-orange-600">
+                  {perdaVolume >= 0 ? 'Diferença (Calculado - Real)' : 'Excesso (Real > Calculado)'}
+                </p>
               </div>
               <div>
                 <p className="text-lg font-semibold text-orange-800">
                   {percentualPerda.toFixed(1)}%
                 </p>
-                <p className="text-xs text-orange-600">Percentual de perda</p>
+                <p className="text-xs text-orange-600">Percentual de diferença</p>
               </div>
             </div>
           </div>
@@ -81,11 +83,11 @@ export const CubagemInfo = ({ cubagem }: CubagemInfoProps) => {
             <div className="grid grid-cols-3 gap-4 text-sm">
               <div>
                 <span className="text-muted-foreground">Medida Inferior:</span>
-                <p className="font-medium">{cubagem.medida_inferior.toFixed(3)} m³</p>
+                <p className="font-medium">{cubagem.medida_inferior.toFixed(3)} m</p>
               </div>
               <div>
                 <span className="text-muted-foreground">Medida Superior:</span>
-                <p className="font-medium">{cubagem.medida_superior.toFixed(3)} m³</p>
+                <p className="font-medium">{cubagem.medida_superior.toFixed(3)} m</p>
               </div>
               <div>
                 <span className="text-muted-foreground">Perímetro:</span>
@@ -138,7 +140,7 @@ export const CubagemInfo = ({ cubagem }: CubagemInfoProps) => {
         medidaInferior={cubagem.medida_inferior}
         medidaSuperior={cubagem.medida_superior}
         perimetro={cubagem.perimetro}
-        showFormula={false}
+        showFormula={true}
       />
     </div>
   );

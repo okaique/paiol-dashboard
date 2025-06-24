@@ -1,21 +1,24 @@
-import { Badge } from '@/components/ui/badge';
+
 import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { 
+  Calendar, 
+  User, 
+  FileText, 
+  DollarSign, 
+  PlayCircle, 
+  PauseCircle, 
+  Truck, 
+  Calculator, 
+  CreditCard, 
+  Fuel,
+  RotateCcw,
+  Clock,
+  Package,
+  MapPin
+} from 'lucide-react';
 import { EventoCompleto } from '@/hooks/useHistoricoCompleto';
 import { formatarDataHoraBrasilia } from '@/utils/dateUtils';
-import {
-  Calculator,
-  Clock,
-  CreditCard,
-  DollarSign,
-  FileText,
-  Fuel,
-  MapPin,
-  Package,
-  PauseCircle,
-  PlayCircle,
-  RotateCcw,
-  Truck
-} from 'lucide-react';
 
 interface EventoCompletoCardProps {
   evento: EventoCompleto;

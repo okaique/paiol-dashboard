@@ -1,3 +1,4 @@
+
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
@@ -5,16 +6,6 @@ import { ptBR } from 'date-fns/locale';
 export const getNowBrasilia = (): Date => {
   return new Date();
 };
-
-// Função utilitária para converter uma data para o fuso de Brasília (UTC-3)
-function toBrasiliaDate(date: Date): Date {
-  // Ajusta a data para UTC-3 (Brasília)
-  // getTimezoneOffset retorna minutos de diferença para UTC, negativo para UTC+
-  const brasiliaOffset = -180; // -3 horas em minutos
-  const localOffset = date.getTimezoneOffset();
-  const diff = brasiliaOffset - localOffset;
-  return new Date(date.getTime() + diff * 60 * 1000);
-}
 
 // Função para formatar data garantindo que seja exibida no fuso de Brasília
 export const formatarDataHoraBrasilia = (data: string | Date): string => {
@@ -38,10 +29,8 @@ export const formatarDataHoraBrasilia = (data: string | Date): string => {
       return String(data);
     }
     
-    // Corrigir para exibir sempre no fuso de Brasília
-    const dataBrasilia = toBrasiliaDate(dataObj);
-
-    const dataFormatada = format(dataBrasilia, "dd/MM/yyyy 'às' HH:mm", { 
+    // Garantir que a formatação seja no fuso de Brasília
+    const dataFormatada = format(dataObj, "dd/MM/yyyy 'às' HH:mm", { 
       locale: ptBR 
     });
     

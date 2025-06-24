@@ -85,15 +85,15 @@ export const FinalizarCicloDialog = ({
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] flex flex-col">
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle className="flex items-center space-x-2">
             <RotateCcw className="h-5 w-5 text-primary" />
             <span>Finalizar Ciclo - {paiol.nome}</span>
           </DialogTitle>
         </DialogHeader>
         
-        <div className="space-y-4">
+        <div className="flex-1 overflow-y-auto space-y-4 pr-2">
           {/* Visualização da transição */}
           <div className="flex items-center justify-center space-x-4 p-4 bg-muted rounded-lg">
             <div className="text-center">
@@ -152,6 +152,7 @@ export const FinalizarCicloDialog = ({
                 onChange={(e) => setObservacoes(e.target.value)}
                 placeholder={`Finalização do Ciclo ${paiol.ciclo_atual} - Adicione observações sobre o fechamento...`}
                 rows={3}
+                className="resize-none"
               />
             </div>
 
@@ -165,25 +166,26 @@ export const FinalizarCicloDialog = ({
                 </p>
               </AlertDescription>
             </Alert>
-
-            <div className="flex justify-end space-x-2 pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setOpen(false)}
-                disabled={isLoading}
-              >
-                Cancelar
-              </Button>
-              <Button 
-                type="submit" 
-                disabled={isLoading}
-                className="bg-red-600 hover:bg-red-700"
-              >
-                {isLoading ? 'Finalizando...' : 'Finalizar Ciclo'}
-              </Button>
-            </div>
           </form>
+        </div>
+
+        {/* Botões fixos na parte inferior */}
+        <div className="flex justify-end space-x-2 pt-4 border-t flex-shrink-0">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setOpen(false)}
+            disabled={isLoading}
+          >
+            Cancelar
+          </Button>
+          <Button 
+            onClick={handleSubmit}
+            disabled={isLoading}
+            className="bg-red-600 hover:bg-red-700"
+          >
+            {isLoading ? 'Finalizando...' : 'Finalizar Ciclo'}
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

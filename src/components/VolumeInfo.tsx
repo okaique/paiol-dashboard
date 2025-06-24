@@ -47,7 +47,7 @@ export const VolumeInfo = ({
             <div className="text-2xl font-bold text-blue-600">
               {volumeTotal.toFixed(2)} m³
             </div>
-            <div className="text-sm text-muted-foreground">Volume Total (Estimado)</div>
+            <div className="text-sm text-muted-foreground">Volume Total (Real)</div>
           </div>
           
           <div className="text-center">
@@ -86,7 +86,7 @@ export const VolumeInfo = ({
             <div className="text-sm">
               <p className="font-medium text-red-800">Volume Excedente</p>
               <p className="text-red-700">
-                Foram retirados <strong>{volumeExcedente.toFixed(2)} m³</strong> além do volume calculado.
+                Foram retirados <strong>{volumeExcedente.toFixed(2)} m³</strong> além do volume real disponível.
               </p>
             </div>
           </div>
@@ -98,7 +98,7 @@ export const VolumeInfo = ({
             <div className="text-sm">
               <p className="font-medium text-orange-800">Volume Esgotado</p>
               <p className="text-orange-700">
-                O volume estimado foi totalmente retirado. Novas retiradas ainda são permitidas.
+                O volume real foi totalmente retirado. Novas retiradas ainda são permitidas.
               </p>
             </div>
           </div>
