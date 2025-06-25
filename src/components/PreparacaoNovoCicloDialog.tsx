@@ -51,29 +51,29 @@ export const PreparacaoNovoCicloDialog = ({
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="flex items-center space-x-2">
-            <RefreshCw className="h-5 w-5 text-primary" />
-            <span>Preparar Novo Ciclo - {paiol.nome}</span>
+      <DialogContent className="w-full max-w-[95vw] sm:max-w-md md:max-w-lg lg:max-w-xl max-h-[95vh] overflow-hidden flex flex-col">
+        <DialogHeader className="flex-shrink-0 px-1">
+          <DialogTitle className="flex items-center space-x-2 text-base sm:text-lg">
+            <RefreshCw className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+            <span className="truncate">Preparar Novo Ciclo - {paiol.nome}</span>
           </DialogTitle>
         </DialogHeader>
         
-        <div className="space-y-4">
+        <div className="flex-1 overflow-y-auto space-y-3 sm:space-y-4 px-1">
           {/* Visualização do ciclo atual */}
-          <div className="flex items-center justify-center space-x-4 p-4 bg-muted rounded-lg">
-            <div className="text-center">
-              <div className="text-lg font-semibold text-blue-600">
+          <div className="flex items-center justify-center space-x-2 sm:space-x-4 p-3 sm:p-4 bg-muted rounded-lg">
+            <div className="text-center min-w-0 flex-1">
+              <div className="text-sm sm:text-lg font-semibold text-blue-600 truncate">
                 Ciclo {paiol.ciclo_atual - 1}
               </div>
-              <div className="text-sm text-muted-foreground">Finalizado</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Finalizado</div>
             </div>
-            <ArrowRight className="h-6 w-6 text-muted-foreground" />
-            <div className="text-center">
-              <div className="text-lg font-semibold text-green-600">
+            <ArrowRight className="h-4 w-4 sm:h-6 sm:w-6 text-muted-foreground flex-shrink-0" />
+            <div className="text-center min-w-0 flex-1">
+              <div className="text-sm sm:text-lg font-semibold text-green-600 truncate">
                 Ciclo {paiol.ciclo_atual}
               </div>
-              <div className="text-sm text-muted-foreground">Preparação</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Preparação</div>
             </div>
           </div>
 
@@ -82,8 +82,8 @@ export const PreparacaoNovoCicloDialog = ({
             <Alert className="bg-green-50 border-green-200">
               <CheckCircle className="h-4 w-4 text-green-600" />
               <AlertDescription>
-                <p className="font-medium text-green-700">Paiol Pronto para Preparação</p>
-                <p className="text-sm text-green-600 mt-1">
+                <p className="font-medium text-green-700 text-sm">Paiol Pronto para Preparação</p>
+                <p className="text-xs sm:text-sm text-green-600 mt-1">
                   O paiol está vazio e sem dragagem ativa. Pode ser preparado para o novo ciclo.
                 </p>
               </AlertDescription>
@@ -92,9 +92,9 @@ export const PreparacaoNovoCicloDialog = ({
             <Alert className="bg-yellow-50 border-yellow-200">
               <AlertTriangle className="h-4 w-4 text-yellow-600" />
               <AlertDescription>
-                <p className="font-medium text-yellow-700">Verificar Status</p>
-                <p className="text-sm text-yellow-600 mt-1">
-                  {paiol.status !== 'VAZIO' && 'O paiol deve estar vazio para preparar novo ciclo.'}
+                <p className="font-medium text-yellow-700 text-sm">Verificar Status</p>
+                <p className="text-xs sm:text-sm text-yellow-600 mt-1 break-words">
+                  {paiol.status !== 'VAZIO' && 'O paiol deve estar vazio para preparar novo ciclo. '}
                   {dragagemAtiva && 'Existe uma dragagem ativa que precisa ser finalizada.'}
                 </p>
               </AlertDescription>
@@ -103,8 +103,8 @@ export const PreparacaoNovoCicloDialog = ({
 
           {/* Resumo do que será feito */}
           <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <h4 className="font-medium text-blue-700 mb-2">Ações da Preparação</h4>
-            <ul className="text-sm text-blue-600 space-y-1">
+            <h4 className="font-medium text-blue-700 mb-2 text-sm sm:text-base">Ações da Preparação</h4>
+            <ul className="text-xs sm:text-sm text-blue-600 space-y-1">
               <li>• Arquivamento dos dados do ciclo anterior</li>
               <li>• Reset das configurações temporárias</li>
               <li>• Preparação do paiol para nova dragagem</li>
@@ -112,47 +112,51 @@ export const PreparacaoNovoCicloDialog = ({
             </ul>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="observacoes">Observações da Preparação</Label>
+              <Label htmlFor="observacoes" className="text-sm">Observações da Preparação</Label>
               <Textarea
                 id="observacoes"
                 value={observacoes}
                 onChange={(e) => setObservacoes(e.target.value)}
                 placeholder={`Preparação do Ciclo ${paiol.ciclo_atual} - Adicione observações sobre a preparação...`}
                 rows={3}
+                className="text-sm"
               />
             </div>
 
             <Alert>
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>
-                <p className="font-medium">Informação</p>
-                <p className="text-sm mt-1">
+                <p className="font-medium text-sm">Informação</p>
+                <p className="text-xs sm:text-sm mt-1">
                   Esta ação prepara o paiol para o Ciclo {paiol.ciclo_atual}, 
                   organizando os dados e deixando tudo pronto para uma nova dragagem.
                 </p>
               </AlertDescription>
             </Alert>
-
-            <div className="flex justify-end space-x-2 pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setOpen(false)}
-                disabled={isLoading}
-              >
-                Cancelar
-              </Button>
-              <Button 
-                type="submit" 
-                disabled={isLoading || !isReadyForNewCycle}
-                className="bg-green-600 hover:bg-green-700"
-              >
-                {isLoading ? 'Preparando...' : 'Preparar Novo Ciclo'}
-              </Button>
-            </div>
           </form>
+        </div>
+
+        {/* Botões fixos na parte inferior */}
+        <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2 pt-4 border-t flex-shrink-0 px-1">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setOpen(false)}
+            disabled={isLoading}
+            className="w-full sm:w-auto text-sm"
+          >
+            Cancelar
+          </Button>
+          <Button 
+            type="submit" 
+            onClick={handleSubmit}
+            disabled={isLoading || !isReadyForNewCycle}
+            className="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-sm"
+          >
+            {isLoading ? 'Preparando...' : 'Preparar Novo Ciclo'}
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

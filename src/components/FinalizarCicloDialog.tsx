@@ -85,43 +85,45 @@ export const FinalizarCicloDialog = ({
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] flex flex-col">
-        <DialogHeader className="flex-shrink-0">
-          <DialogTitle className="flex items-center space-x-2">
-            <RotateCcw className="h-5 w-5 text-primary" />
-            <span>Finalizar Ciclo - {paiol.nome}</span>
+      <DialogContent className="w-full max-w-[95vw] sm:max-w-md md:max-w-lg lg:max-w-xl max-h-[95vh] overflow-hidden flex flex-col">
+        <DialogHeader className="flex-shrink-0 px-1">
+          <DialogTitle className="flex items-center space-x-2 text-base sm:text-lg">
+            <RotateCcw className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+            <span className="truncate">Finalizar Ciclo - {paiol.nome}</span>
           </DialogTitle>
         </DialogHeader>
         
-        <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+        <div className="flex-1 overflow-y-auto space-y-3 sm:space-y-4 px-1">
           {/* Visualização da transição */}
-          <div className="flex items-center justify-center space-x-4 p-4 bg-muted rounded-lg">
-            <div className="text-center">
-              <div className="text-lg font-semibold text-yellow-600">
+          <div className="flex items-center justify-center space-x-2 sm:space-x-4 p-3 sm:p-4 bg-muted rounded-lg">
+            <div className="text-center min-w-0 flex-1">
+              <div className="text-sm sm:text-lg font-semibold text-yellow-600 truncate">
                 RETIRANDO
               </div>
-              <div className="text-sm text-muted-foreground">Status Atual</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Status Atual</div>
             </div>
-            <ArrowRight className="h-6 w-6 text-muted-foreground" />
-            <div className="text-center">
-              <div className="text-lg font-semibold text-gray-600">
+            <ArrowRight className="h-4 w-4 sm:h-6 sm:w-6 text-muted-foreground flex-shrink-0" />
+            <div className="text-center min-w-0 flex-1">
+              <div className="text-sm sm:text-lg font-semibold text-gray-600 truncate">
                 VAZIO
               </div>
-              <div className="text-sm text-muted-foreground">Novo Status</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Novo Status</div>
             </div>
           </div>
 
           {/* Resumo do Ciclo */}
           <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <h4 className="font-medium text-blue-700 mb-2">Resumo do Ciclo {paiol.ciclo_atual}</h4>
-            <div className="grid grid-cols-2 gap-2 text-sm">
+            <h4 className="font-medium text-blue-700 mb-2 text-sm sm:text-base">
+              Resumo do Ciclo {paiol.ciclo_atual}
+            </h4>
+            <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm">
               <div>
                 <span className="text-blue-600">Volume Total:</span>
-                <p className="font-medium">{volumeControl.volumeTotal.toFixed(2)} m³</p>
+                <p className="font-medium truncate">{volumeControl.volumeTotal.toFixed(2)} m³</p>
               </div>
               <div>
                 <span className="text-blue-600">Volume Retirado:</span>
-                <p className="font-medium">{volumeControl.volumeRetirado.toFixed(2)} m³</p>
+                <p className="font-medium truncate">{volumeControl.volumeRetirado.toFixed(2)} m³</p>
               </div>
               <div>
                 <span className="text-blue-600">Aproveitamento:</span>
@@ -138,29 +140,29 @@ export const FinalizarCicloDialog = ({
           <Alert className={volumeStatus.bgColor}>
             <StatusIcon className={`h-4 w-4 ${volumeStatus.color}`} />
             <AlertDescription>
-              <p className={`font-medium ${volumeStatus.color}`}>Status do Volume</p>
-              <p className="text-sm mt-1">{volumeStatus.message}</p>
+              <p className={`font-medium ${volumeStatus.color} text-xs sm:text-sm`}>Status do Volume</p>
+              <p className="text-xs sm:text-sm mt-1 break-words">{volumeStatus.message}</p>
             </AlertDescription>
           </Alert>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="observacoes">Observações de Fechamento</Label>
+              <Label htmlFor="observacoes" className="text-sm">Observações de Fechamento</Label>
               <Textarea
                 id="observacoes"
                 value={observacoes}
                 onChange={(e) => setObservacoes(e.target.value)}
                 placeholder={`Finalização do Ciclo ${paiol.ciclo_atual} - Adicione observações sobre o fechamento...`}
                 rows={3}
-                className="resize-none"
+                className="resize-none text-sm"
               />
             </div>
 
             <Alert>
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>
-                <p className="font-medium">Atenção</p>
-                <p className="text-sm mt-1">
+                <p className="font-medium text-sm">Atenção</p>
+                <p className="text-xs sm:text-sm mt-1">
                   Esta ação finalizará o ciclo atual e iniciará o Ciclo {paiol.ciclo_atual + 1}. 
                   O paiol ficará disponível para uma nova dragagem.
                 </p>
@@ -170,19 +172,20 @@ export const FinalizarCicloDialog = ({
         </div>
 
         {/* Botões fixos na parte inferior */}
-        <div className="flex justify-end space-x-2 pt-4 border-t flex-shrink-0">
+        <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2 pt-4 border-t flex-shrink-0 px-1">
           <Button
             type="button"
             variant="outline"
             onClick={() => setOpen(false)}
             disabled={isLoading}
+            className="w-full sm:w-auto text-sm"
           >
             Cancelar
           </Button>
           <Button 
             onClick={handleSubmit}
             disabled={isLoading}
-            className="bg-red-600 hover:bg-red-700"
+            className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-sm"
           >
             {isLoading ? 'Finalizando...' : 'Finalizar Ciclo'}
           </Button>
